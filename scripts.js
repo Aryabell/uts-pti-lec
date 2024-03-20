@@ -75,6 +75,7 @@ function addData(nim, nama, alamat) {
     </button>
   </td>
 `;
+
   newRow.querySelector(".editBtn").addEventListener("click", function () {
     editIndex = newRow.rowIndex;
     modal.style.display = "block";
