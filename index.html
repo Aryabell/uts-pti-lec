@@ -1,63 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DATA MAHASISWA</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <h1>DATA MAHASISWA</h1>
-      <button id="addBtn">Add Data</button>
-      <table id="dataTable">
-        <thead>
-          <tr>
-            <th>NIM</th>
-            <th>Nama Lengkap</th>
-            <th>Alamat</th>
-            <th>Pengaturan</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody">
-          <!-- Data will be displayed here -->
-        </tbody>
-      </table>
-    </div>
-    <!-- Add pagination controls -->
-    <div id="pagination" class="pagination">
-      <button id="prevPageBtn">Previous</button>
-      <button id="nextPageBtn">Next</button>
-    </div>
-
-    <!-- Modal for adding and editing data -->
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modalTitle">Add Data</h2>
-        <form id="dataForm">
-          <label for="nim">NIM:</label>
-          <input type="text" id="nim" name="nim" />
-          <label for="nama">Nama Lengkap:</label>
-          <input type="text" id="nama" name="nama" />
-          <label for="alamat">Alamat:</label>
-          <input type="text" id="alamat" name="alamat" />
-          <button type="submit" id="saveBtn">Save</button>
-        </form>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DATA MAHASISWA</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="text-center">DATA MAHASISWA</h1>
+        <button id="addBtn">Add Data</button>
+        <table id="dataTable" class="table table-bordered">
+          <thead>
+            <tr>
+              <th>NIM</th>
+              <th>Nama Lengkap</th>
+              <th>Alamat</th>
+              <th>Pengaturan</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+          </tbody>
+        </table>
+        <div id="pagination" class="pagination">
+          <button id="prevPageBtn">Previous</button>
+          <button id="nextPageBtn">Next</button>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div id="alertModal" class="modals">
-      <div class="modal-contents">
-        <span class="closes">&times;</span>
-        <p id="alertMessage"></p>
-      </div>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modalTitle">Add Data</h2>
+      <form id="dataForm">
+        <div class="form-group">
+          <label for="nim">NIM</label>
+          <input type="text" id="nim" name="nim" placeholder="Nomor Induk Mahasiswa" class="form-control" readonly>
+          <label class="label-text nim-text" for="nim"></label>
+        </div>
+        <div class="form-group">
+          <label for="nama">Nama</label>
+          <input type="text" id="nama" name="nama" placeholder="Nama lengkap" class="form-control">
+          <label class="label-text" for="nama">Nama Lengkap</label>
+        </div>
+        <div class="form-group">
+          <label for="alamat">Alamat</label>
+          <input type="text" id="alamat" name="alamat" placeholder="Tempat tinggal sekarang" class="form-control">
+          <label class="label-text" for="alamat">Alamat</label>
+        </div>
+        <button type="submit" id="saveBtn">Save</button>
+      </form>
     </div>
+  </div>
 
-    <script src="scripts.js"></script>
-  </body>
+  <div id="alertModal" class="modals">
+    <div class="modal-contents">
+      <span class="closes">&times;</span>
+      <p id="alertMessage"></p>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="scripts.js"></script>
+</body>
 </html>
