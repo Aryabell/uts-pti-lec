@@ -317,8 +317,25 @@ table#dataTable tbody tr:hover {
     cursor: pointer;
   }
   
+  #alertModal.success {
+    background-color: green;
+  }
+  
+  #alertModal.deleted {
+    background-color: red;
+  }
+  
+  #alertModal.warning {
+    background-color: orange;
+  }
+
+  #alertModal.updated {
+    background-color: rgb(14, 145, 185)
+  }
+
   #alertMessage {
     font-size: 16px;
+    color: white;
   }
   
   .editBtn, .deleteBtn {
@@ -335,9 +352,8 @@ table#dataTable tbody tr:hover {
     background-color: #dc3545;
 }
 
-/* Hover effect for table rows */
 table#dataTable tbody tr:hover {
-  background-color: #7b7b7b; /* Change to the desired hover color */
+  background-color: #7b7b7b; 
 }
 
   

@@ -52,10 +52,10 @@ dataForm.onsubmit = function (event) {
   } else {
     if (nim && nama && alamat) {
       addData(nim, nama, alamat);
-      showAlert("Berhasil Menambahkan Data Baru");
+      showAlert('success', "Berhasil Menambahkan Data Baru");
       modal.style.display = "none";
     } else {
-      showAlert("Data tidak lengkap. Tidak dapat menambah data.");
+      showAlert('warning', "Data tidak lengkap. Tidak dapat menambah data.");
     }
   }
 };
@@ -88,7 +88,7 @@ function addData(nim, nama, alamat) {
   });
   newRow.querySelector(".deleteBtn").addEventListener("click", function () {
     dataTable.deleteRow(newRow.rowIndex);
-    showAlert("Berhasil Menghapus Data");
+    showAlert('deleted', "Berhasil Menghapus Data");
   });
 
   let totalRows = tableBody.getElementsByTagName("tr").length;
@@ -109,7 +109,7 @@ function updateData(index, nama, alamat) {
   if (nimInput.value !== editNIM) {
     row.cells[0].innerText = nimInput.value;
   }
-  showAlert("Berhasil Melakukan Update Data");
+  showAlert('updated', "Berhasil Melakukan Update Data");
   modal.style.display = "none";
 }
 
@@ -117,16 +117,18 @@ function updateData(index, nama, alamat) {
 let alertModal = document.getElementById("alertModal");
 let alertCloseBtn = document.querySelector("#alertModal .close");
 
-// Function to display the alert modal
-function showAlert(message) {
-  document.getElementById("alertMessage").innerText = message;
+function showAlert(messageType, messageText) {
+  document.getElementById("alertMessage").innerText = messageText;
+  alertModal.className = `alertModal ${messageType}`;
   alertModal.style.display = "block";
 
   // Set timeout to hide the alert after 3 seconds
   setTimeout(function () {
     alertModal.style.display = "none";
+    alertModal.className = "alertModal";
   }, 3000);
 }
+
 let currentPage = 1;
 const rowsPerPage = 5;
 
