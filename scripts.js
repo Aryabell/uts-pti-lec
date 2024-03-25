@@ -11,15 +11,11 @@ let namaInput = document.getElementById("nama");
 let alamatInput = document.getElementById("alamat");
 let editMode = false;
 let editIndex = null;
-let editNIM = null; // tambahkan variabel untuk menyimpan NIM saat mode edit
+let editNIM = null;
 
-// Event listener for input event on NIM input field
 nimInput.addEventListener("input", function (event) {
-  // Get the current value of the input field
   let currentValue = event.target.value;
-  // Use regular expression to test if the value contains only numbers
   let isValid = /^\d*$/.test(currentValue);
-  // If the input value is not a number, remove the invalid characters
   if (!isValid) {
     event.target.value = currentValue.replace(/\D/g, "");
   }
@@ -30,6 +26,7 @@ addBtn.onclick = function () {
   modalTitle.innerText = "Add Data";
   editMode = false;
   dataForm.reset();
+  nimInput.removeAttribute("readonly");
 };
 
 closeBtn.onclick = function () {
@@ -52,10 +49,11 @@ dataForm.onsubmit = function (event) {
   } else {
     if (nim && nama && alamat) {
       addData(nim, nama, alamat);
-      showAlert("Berhasil Menambahkan Data Baru");
+      showAlert('success', "Berhasil Menambahkan Data Baru");
       modal.style.display = "none";
+      nimInput.classList.remove("edit-mode");
     } else {
-      showAlert("Data tidak lengkap. Tidak dapat menambah data.");
+      showAlert('warning', "Data tidak lengkap. Tidak dapat menambah data.");
     }
   }
 };
@@ -63,37 +61,37 @@ dataForm.onsubmit = function (event) {
 function addData(nim, nama, alamat) {
   let newRow = tableBody.insertRow();
   newRow.innerHTML = `
-  <td>${nim}</td>
-  <td>${nama}</td>
-  <td>${alamat}</td>
-  <td>
-    <button class="editBtn">Edit
+    <td>${nim}</td>
+    <td>${nama}</td>
+    <td>${alamat}</td>
+    <td>
+    <button class="editBtn">
       <i class="fas fa-edit"></i>
     </button>
-    <button class="deleteBtn">Delete
-      <i class="fas fa-trash"></i>
-    </button>
+    <button class="deleteBtn">
+  <i class="fas fa-trash"></i></button>
   </td>
-`;
+  `;
   newRow.querySelector(".editBtn").addEventListener("click", function () {
     editIndex = newRow.rowIndex;
     modal.style.display = "block";
     modalTitle.innerText = "Edit Data";
     editMode = true;
-    editNIM = nim; // simpan nilai NIM saat mode edit
+    editNIM = nim;
     nimInput.value = nim;
     namaInput.value = nama;
     alamatInput.value = alamat;
+    nimInput.setAttribute("readonly", true);
+    nimInput.classList.add("edit-mode");
   });
   newRow.querySelector(".deleteBtn").addEventListener("click", function () {
     dataTable.deleteRow(newRow.rowIndex);
-    showAlert("Berhasil Menghapus Data");
+    showAlert('deleted', "Berhasil Menghapus Data");
   });
 
   let totalRows = tableBody.getElementsByTagName("tr").length;
   let newRowsCount = totalRows - (currentPage - 1) * rowsPerPage;
 
-  // Check if the number of new rows exceeds 6, then move to the next page
   if (newRowsCount > 5) {
     displayRows();
     updatePagination();
@@ -104,32 +102,31 @@ function updateData(index, nama, alamat) {
   let row = dataTable.rows[index];
   row.cells[1].innerText = nama;
   row.cells[2].innerText = alamat;
-  // Periksa apakah NIM berbeda, jika berbeda, ubah juga nilai NIM di dalam tabel
   if (nimInput.value !== editNIM) {
     row.cells[0].innerText = nimInput.value;
   }
-  showAlert("Berhasil Melakukan Update Data");
+  showAlert('updated', "Berhasil Melakukan Update Data");
   modal.style.display = "none";
 }
 
-// Define the alert modal and close button
 let alertModal = document.getElementById("alertModal");
 let alertCloseBtn = document.querySelector("#alertModal .close");
 
-// Function to display the alert modal
-function showAlert(message) {
-  document.getElementById("alertMessage").innerText = message;
+function showAlert(messageType, messageText) {
+  document.getElementById("alertMessage").innerText = messageText;
+  alertModal.className = `alertModal ${messageType}`;
   alertModal.style.display = "block";
 
   // Set timeout to hide the alert after 3 seconds
   setTimeout(function () {
     alertModal.style.display = "none";
+    alertModal.className = "alertModal";
   }, 3000);
 }
+
 let currentPage = 1;
 const rowsPerPage = 5;
 
-// Function to display rows based on current page
 function displayRows() {
   let rows = tableBody.getElementsByTagName("tr");
   let startIndex = (currentPage - 1) * rowsPerPage;
@@ -144,11 +141,8 @@ function displayRows() {
   }
 }
 
-// Function to update pagination controls
 function updatePagination() {
-  let totalPages = Math.ceil(
-    tableBody.getElementsByTagName("tr").length / rowsPerPage
-  );
+  let totalPages = Math.ceil(tableBody.getElementsByTagName("tr").length / rowsPerPage);
   let prevPageBtn = document.getElementById("prevPageBtn");
   let nextPageBtn = document.getElementById("nextPageBtn");
 
@@ -165,7 +159,6 @@ function updatePagination() {
   }
 }
 
-// Event listener for previous page button
 document.getElementById("prevPageBtn").addEventListener("click", function () {
   if (currentPage > 1) {
     currentPage--;
@@ -174,11 +167,8 @@ document.getElementById("prevPageBtn").addEventListener("click", function () {
   }
 });
 
-// Event listener for next page button
 document.getElementById("nextPageBtn").addEventListener("click", function () {
-  let totalPages = Math.ceil(
-    tableBody.getElementsByTagName("tr").length / rowsPerPage
-  );
+  let totalPages = Math.ceil(tableBody.getElementsByTagName("tr").length / rowsPerPage);
   if (currentPage < totalPages) {
     currentPage++;
     displayRows();
@@ -186,6 +176,5 @@ document.getElementById("nextPageBtn").addEventListener("click", function () {
   }
 });
 
-// Call initial display and pagination update
 displayRows();
 updatePagination();
